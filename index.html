@@ -2,11 +2,11 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>OPTA · 6E→6D · ROOM‑Engine · v2.0</title>
+<title>SCR · OPTA · 6E→6D · ROOM‑Engine · Stationen</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:30px; }
-h1 { color:#6cf; margin-bottom:25px; }
+h1 { color:#6cf; margin-bottom:25px; text-align:center; }
 
 .grid {
     display:grid;
@@ -36,7 +36,6 @@ pre {
 
 .segment { color:#4cf; font-size:12px; margin-top:5px; }
 
-/* Mini-Diagramme */
 .diagram {
     background:#000;
     border:1px solid #333;
@@ -51,44 +50,23 @@ pre {
 
 <body>
 
-<h1>OPTA · 6E→6D · ROOM‑Engine‑Index · v2.0</h1>
+<h1>SCR · OPTA · 6E→6D · ROOM‑Engine · Stationen</h1>
 
-<div class="grid" id="grid"></div>
+<div class="grid">
 
-<script>
-// Achsen → Alias → ROOM-Datei
-const axes = {
-    "T": { alias: "A", room: "T.room" },
-    "U": { alias: "W", room: "U.room" },
-    "H": { alias: "Q", room: "H.room" },
-    "B": { alias: "S", room: "B.room" },
-    "Y": { alias: "V", room: "Y.room" },
-    "Z": { alias: "X", room: "Z.room" }
-};
+<!-- T -->
+<div class="block">
+<h2>A · Achse T</h2>
+<div class="segment">ROOM: T.room</div>
 
-// ROOM-Datei laden
-async function loadRoom(axis, roomFile) {
-    try {
-        const res = await fetch(axis + "/" + roomFile);
-        if (!res.ok) return "ROOM-Datei nicht gefunden.";
-        return await res.text();
-    } catch {
-        return "ROOM konnte nicht geladen werden.";
-    }
-}
-
-// Mini-Diagramme
-function axisDiagram(axis) {
-    return `
-Achse: ${axis}
+<div class="diagram">
+Achse: T
 ┌───────────────┐
 │ IN  →  CORE → OUT │
 └───────────────┘
-`;
-}
+</div>
 
-function optaDiagram() {
-    return `
+<div class="diagram">
 OPTA² (8)
 ●──●──●──●
 ●──●──●──●
@@ -97,47 +75,170 @@ OPTA³ (24)
 ◇◇◇◇◇◇◇◇
 ◇◇◇◇◇◇◇◇
 ◇◇◇◇◇◇◇◇
-`;
-}
+</div>
 
-function nc2Diagram() {
-    return `
+<div class="diagram">
 NC²-Matrix
 [□]─[□]─[□]
  │   │   │
 [□]─[□]─[□]
  │   │   │
 [□]─[□]─[□]
-`;
-}
+</div>
 
-async function buildGrid() {
-    const grid = document.getElementById("grid");
+<pre>ROOM-Datei nicht gefunden.</pre>
+</div>
 
-    for (const axis of Object.keys(axes)) {
-        const data = axes[axis];
-        const roomContent = await loadRoom(axis, data.room);
+<!-- U -->
+<div class="block">
+<h2>W · Achse U</h2>
+<div class="segment">ROOM: U.room</div>
 
-        const block = document.createElement("div");
-        block.className = "block";
+<div class="diagram">
+Achse: U
+┌───────────────┐
+│ IN  →  CORE → OUT │
+└───────────────┘
+</div>
 
-        block.innerHTML = `
-            <h2>${data.alias} · Achse ${axis}</h2>
-            <div class="segment">ROOM: ${data.room}</div>
+<div class="diagram">
+OPTA² (8)
+●──●──●──●
+●──●──●──●
 
-            <div class="diagram">${axisDiagram(axis)}</div>
-            <div class="diagram">${optaDiagram()}</div>
-            <div class="diagram">${nc2Diagram()}</div>
+OPTA³ (24)
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+</div>
 
-            <pre>${roomContent}</pre>
-        `;
+<div class="diagram">
+NC²-Matrix
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+</div>
 
-        grid.appendChild(block);
-    }
-}
+<pre>ROOM-Datei nicht gefunden.</pre>
+</div>
 
-buildGrid();
-</script>
+<!-- H -->
+<div class="block">
+<h2>Q · Achse H</h2>
+<div class="segment">ROOM: H.room</div>
 
-</body>
-</html>
+<div class="diagram">
+Achse: H
+┌───────────────┐
+│ IN  →  CORE → OUT │
+└───────────────┘
+</div>
+
+<div class="diagram">
+OPTA² (8)
+●──●──●──●
+●──●──●──●
+
+OPTA³ (24)
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+</div>
+
+<div class="diagram">
+NC²-Matrix
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+</div>
+
+<pre>ROOM-Datei nicht gefunden.</pre>
+</div>
+
+<!-- B -->
+<div class="block">
+<h2>S · Achse B</h2>
+<div class="segment">ROOM: B.room</div>
+
+<div class="diagram">
+Achse: B
+┌───────────────┐
+│ IN  →  CORE → OUT │
+└───────────────┘
+</div>
+
+<div class="diagram">
+OPTA² (8)
+●──●──●──●
+●──●──●──●
+
+OPTA³ (24)
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+</div>
+
+<div class="diagram">
+NC²-Matrix
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+</div>
+
+<pre>ROOM-Datei nicht gefunden.</pre>
+</div>
+
+<!-- Y -->
+<div class="block">
+<h2>V · Achse Y</h2>
+<div class="segment">ROOM: Y.room</div>
+
+<div class="diagram">
+Achse: Y
+┌───────────────┐
+│ IN  →  CORE → OUT │
+└───────────────┘
+</div>
+
+<div class="diagram">
+OPTA² (8)
+●──●──●──●
+●──●──●──●
+
+OPTA³ (24)
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+</div>
+
+<div class="diagram">
+NC²-Matrix
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+</div>
+
+<pre>ROOM-Datei nicht gefunden.</pre>
+</div>
+
+<!-- Z -->
+<div class="block">
+<h2>X · Achse Z</h2>
+<div class="segment">ROOM: Z.room</div>
+
+<div class="diagram">
+Achse: Z
+┌───────────────┐
+│ IN  →  CORE → OUT │
+└───────────────┘
+</div>
+
+<div class="diagram">
