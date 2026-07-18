@@ -2,50 +2,142 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>360 – Vollrotation · iki1uc</title>
+<title>OPTA · 6E→6D · ROOM‑Engine · v2.0</title>
 
 <style>
-body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
-h1 { color:#0f0; letter-spacing:4px; margin-bottom:30px; }
-.block { background:#111; border:1px solid #333; padding:25px; margin-bottom:30px; border-radius:8px; }
-.title { font-size:22px; color:#6cf; margin-bottom:10px; }
-a { color:#6cf; text-decoration:none; font-weight:bold; }
-pre { background:#000; border-left:3px solid #6cf; padding:15px; margin-top:10px; white-space:pre-wrap; }
+body { background:#000; color:#0f0; font-family:monospace; padding:30px; }
+h1 { color:#6cf; margin-bottom:25px; }
+
+.grid {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+}
+
+.block {
+    background:#111;
+    border:1px solid #333;
+    padding:20px;
+    border-radius:8px;
+}
+
+.block h2 {
+    color:#6cf;
+    margin-bottom:10px;
+}
+
+pre {
+    background:#000;
+    border-left:3px solid #6cf;
+    padding:15px;
+    white-space:pre-wrap;
+    margin-top:10px;
+}
+
+.segment { color:#4cf; font-size:12px; margin-top:5px; }
+
+/* Mini-Diagramme */
+.diagram {
+    background:#000;
+    border:1px solid #333;
+    padding:10px;
+    margin-top:10px;
+    font-size:12px;
+    white-space:pre;
+    color:#6cf;
+}
 </style>
 </head>
 
 <body>
 
-<h1>360 – Vollrotation · iki1uc</h1>
+<h1>OPTA · 6E→6D · ROOM‑Engine‑Index · v2.0</h1>
 
-<div class="block">
-    <div class="title">360°-System</div>
-    <p>Dieses Modul rotiert alle Achsen, Dimensionen und Module im vollständigen 360°-Raum.</p>
-</div>
+<div class="grid" id="grid"></div>
 
-<div class="block">
-    <div class="title">Identität</div>
-    <p><a href="ID.html">→ 360‑Identität öffnen</a></p>
-</div>
+<script>
+// Achsen → Alias → ROOM-Datei
+const axes = {
+    "T": { alias: "A", room: "T.room" },
+    "U": { alias: "W", room: "U.room" },
+    "H": { alias: "Q", room: "H.room" },
+    "B": { alias: "S", room: "B.room" },
+    "Y": { alias: "V", room: "Y.room" },
+    "Z": { alias: "X", room: "Z.room" }
+};
 
-<div class="block">
-    <div class="title">360°-Daten</div>
-    <pre>
-Rotation = 360°
-Achsenmatrix = 6×6
-Dimensionen = 6D
-Felder pro Achse = 64
-Ausnutzung = 100%
-    </pre>
-</div>
+// ROOM-Datei laden
+async function loadRoom(axis, roomFile) {
+    try {
+        const res = await fetch(axis + "/" + roomFile);
+        if (!res.ok) return "ROOM-Datei nicht gefunden.";
+        return await res.text();
+    } catch {
+        return "ROOM konnte nicht geladen werden.";
+    }
+}
 
-<div class="block">
-    <div class="title">Module</div>
-    <a href="../AXI/index.html">AXI</a>
-    <a href="../6d/index.html">6d</a>
-    <a href="../ANKER/index.html">ANKER</a>
-    <a href="../API/index.html">API</a>
-</div>
+// Mini-Diagramme
+function axisDiagram(axis) {
+    return `
+Achse: ${axis}
+┌───────────────┐
+│ IN  →  CORE → OUT │
+└───────────────┘
+`;
+}
+
+function optaDiagram() {
+    return `
+OPTA² (8)
+●──●──●──●
+●──●──●──●
+
+OPTA³ (24)
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+◇◇◇◇◇◇◇◇
+`;
+}
+
+function nc2Diagram() {
+    return `
+NC²-Matrix
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+ │   │   │
+[□]─[□]─[□]
+`;
+}
+
+async function buildGrid() {
+    const grid = document.getElementById("grid");
+
+    for (const axis of Object.keys(axes)) {
+        const data = axes[axis];
+        const roomContent = await loadRoom(axis, data.room);
+
+        const block = document.createElement("div");
+        block.className = "block";
+
+        block.innerHTML = `
+            <h2>${data.alias} · Achse ${axis}</h2>
+            <div class="segment">ROOM: ${data.room}</div>
+
+            <div class="diagram">${axisDiagram(axis)}</div>
+            <div class="diagram">${optaDiagram()}</div>
+            <div class="diagram">${nc2Diagram()}</div>
+
+            <pre>${roomContent}</pre>
+        `;
+
+        grid.appendChild(block);
+    }
+}
+
+buildGrid();
+</script>
 
 </body>
 </html>
